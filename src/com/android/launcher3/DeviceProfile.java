@@ -31,6 +31,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
+import android.os.SystemProperties;
+
 import com.android.launcher3.CellLayout.ContainerType;
 import com.android.launcher3.badge.BadgeRenderer;
 
@@ -161,9 +163,30 @@ public class DeviceProfile {
         DisplayMetrics dm = res.getDisplayMetrics();
 
         // Constants from resources
-        isTablet = res.getBoolean(R.bool.is_tablet);
-        isLargeTablet = res.getBoolean(R.bool.is_large_tablet);
-        isPhone = !isTablet && !isLargeTablet;
+        String property = SystemProperties.get("persist.sys.density", "none");
+        switch(property){
+            case "Phone":
+                isTablet = false;
+                isLargeTablet = false;
+                isPhone = true;
+                break;
+            case "Tablet":
+                isTablet = true;
+                isLargeTablet = false;
+                isPhone = false;
+                break;
+            case "LargeTablet":
+                isTablet = true;
+                isLargeTablet = true;
+                isPhone = false;
+                break;
+            case "none":
+            default:
+                isTablet = res.getBoolean(R.bool.is_tablet);
+                isLargeTablet = res.getBoolean(R.bool.is_large_tablet);
+                isPhone = !isTablet && !isLargeTablet;
+                break;
+        }
 
         // Some more constants
         transposeLayoutWithOrientation =
