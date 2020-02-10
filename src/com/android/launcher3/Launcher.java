@@ -152,6 +152,9 @@ import java.util.concurrent.Executor;
 import static com.android.launcher3.util.RunnableWithId.RUNNABLE_ID_BIND_APPS;
 import static com.android.launcher3.util.RunnableWithId.RUNNABLE_ID_BIND_WIDGETS;
 
+import android.app.ThemeManager;
+import android.os.SystemProperties;
+
 /**
  * Default launcher application.
  */
@@ -159,7 +162,7 @@ public class Launcher extends BaseActivity
         implements LauncherExterns, View.OnClickListener, OnLongClickListener,
                    LauncherModel.Callbacks, View.OnTouchListener, LauncherProviderChangeListener,
                    AccessibilityManager.AccessibilityStateChangeListener,
-                   WallpaperColorInfo.OnThemeChangeListener {
+                   WallpaperColorInfo.OnThemeChangeListener, ThemeManager.OnThemeChangedListener {
     public static final String TAG = "Launcher";
     static final boolean LOGD = false;
 
@@ -283,6 +286,10 @@ public class Launcher extends BaseActivity
     private ObjectAnimator mScrimAnimator;
     private boolean mShouldFadeInScrim;
 
+    private ThemeManager tm;
+    private boolean themeChaneged = false;
+    private String themeName;
+
     private PopupDataProvider mPopupDataProvider;
 
     // Determines how long to wait after a rotation before restoring the screen orientation to
@@ -374,7 +381,17 @@ public class Launcher extends BaseActivity
 
         WallpaperColorInfo wallpaperColorInfo = WallpaperColorInfo.getInstance(this);
         wallpaperColorInfo.setOnThemeChangeListener(this);
-        overrideTheme(wallpaperColorInfo.isDark(), wallpaperColorInfo.supportsDarkText());
+        // overrideTheme(wallpaperColorInfo.isDark(), wallpaperColorInfo.supportsDarkText());
+
+        String property_theme = SystemProperties.get("persist.sys.theme", "Default");
+        if(!property_theme.equals("Default")){
+            themeName = "MyLauncherTheme" + property_theme;
+            int resId = getResources().getIdentifier(themeName, "style", getPackageName());
+            setTheme(resId);
+        }
+        tm = (ThemeManager)getSystemService(Context.THEME_SERVICE);
+        tm.registerThemeCallback(this);
+        themeChaneged = false;
 
         super.onCreate(savedInstanceState);
 
@@ -907,6 +924,17 @@ public class Launcher extends BaseActivity
     @Override
     protected void onStart() {
         super.onStart();
+
+        if(themeChaneged){
+            themeChaneged = false;
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        
+
         FirstFrameAnimatorHelper.setIsVisible(true);
 
         if (mLauncherCallbacks != null) {
@@ -4036,5 +4064,16 @@ public class Launcher extends BaseActivity
                 recreate();
             }
         }
+    }
+
+    @Override
+    public void onThemeChanged(String theme){
+        themeChaneged = true;
+        if(!theme.equals("Default")){
+            themeName = "MyLauncherTheme" + theme;
+        }else{
+            themeName = "LauncherTheme";
+        }
+        setTheme(getResources().getIdentifier(themeName, "style", getPackageName()));
     }
 }

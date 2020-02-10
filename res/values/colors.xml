@@ -40,4 +40,14 @@
 
     <color name="all_apps_bg_hand_fill">#E5E5E5</color>
     <color name="all_apps_bg_hand_fill_dark">#9AA0A6</color>
+
+    <color name="MyRed">#80FF0000</color>
+    <color name="MyRedBack">#FFFEF0F1</color>
+    <color name="MyGreen">#8000FF00</color>
+    <color name="MyGreenBack">#FFE0F4E9</color>
+    <color name="MyBlue">#800000FF</color>
+    <color name="MyBlueBack">#FFE5EAFF</color>
+    <color name="MyYellow">#80FFFC66</color>
+    <color name="MyYellowBack">#FFFFFDD8</color>
+
 </resources>

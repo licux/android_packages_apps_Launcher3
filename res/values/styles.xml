@@ -46,6 +46,42 @@
 
     <style name="LauncherTheme" parent="@style/BaseLauncherThemeWithCustomAttrs"></style>
 
+    <style name="MyLauncherThemeRed" parent="@style/LauncherTheme">
+        <item name="popupColorPrimary">@color/MyRed</item>
+        <item name="popupColorSecondary">@color/MyRed</item>
+        <item name="android:statusBarColor">@color/MyRed</item>
+        <item name="android:navigationBarColor">@color/MyRed</item>
+        <item name="android:textColor">@color/MyRed</item>
+        <item name="allAppsScrimColor">@color/MyRedBack</item>
+    </style>
+
+    <style name="MyLauncherThemeGreen" parent="@style/LauncherTheme">
+        <item name="popupColorPrimary">@color/MyGreen</item>
+        <item name="popupColorSecondary">@color/MyGreen</item>
+        <item name="android:statusBarColor">@color/MyGreen</item>
+        <item name="android:navigationBarColor">@color/MyGreen</item>
+        <item name="android:textColor">@color/MyGreen</item>
+        <item name="allAppsScrimColor">@color/MyGreenBack</item>
+    </style>
+
+    <style name="MyLauncherThemeBlue" parent="@style/LauncherTheme">
+        <item name="popupColorPrimary">@color/MyBlue</item>
+        <item name="popupColorSecondary">@color/MyBlue</item>
+        <item name="android:statusBarColor">@color/MyBlue</item>
+        <item name="android:navigationBarColor">@color/MyBlue</item>
+        <item name="android:textColor">@color/MyBlue</item>
+        <item name="allAppsScrimColor">@color/MyBlueBack</item>
+    </style>
+
+    <style name="MyLauncherThemeYellow" parent="@style/LauncherTheme">
+        <item name="popupColorPrimary">@color/MyYellow</item>
+        <item name="popupColorSecondary">@color/MyYellow</item>
+        <item name="android:statusBarColor">@color/MyYellow</item>
+        <item name="android:navigationBarColor">@color/MyYellow</item>
+        <item name="android:textColor">@color/MyYellow</item>
+        <item name="allAppsScrimColor">@color/MyYellowBack</item>
+    </style>
+
     <style name="LauncherThemeDarkText" parent="@style/LauncherTheme">
         <item name="workspaceTextColor">#FF212121</item>
         <item name="workspaceShadowColor">@android:color/transparent</item>
@@ -80,6 +116,8 @@
         <item name="android:colorEdgeEffect">?attr/workspaceTextColor</item>
         <item name="android:textColorPrimary">?attr/workspaceTextColor</item>
         <item name="android:textColorSecondary">?attr/workspaceTextColor</item>
+        <item name="android:statusBarColor">#008888</item>
+        <item name="android:navigationBarColor">#008888</item>
     </style>
 
     <!-- Theme for the widget container. Overridden on API 26. -->
